@@ -113,12 +113,32 @@ async function signout() {
     user = null;
 }
 
+async function getStudentTest() {
+    const { data, error } = await supabase
+        .from('Student')
+        .select(`
+            *,
+            PhoneNumber (
+                *
+            )
+        `)
+        .eq('Name', 'Bob');
+
+    if(data) {
+        console.log("data:", data);
+    }
+
+    if(error) {
+        console.log("error:", error);
+    }   
+}
 
 </script>
 
 <button on:click={()=>getDataTest()}>Get Data</button>
 
 <button on:click={()=>addDataTest()}>Insert Data</button> 
+<button on:click={()=>getStudentTest()}>Get Student Data</button> 
 <br><hr>
 
 <button on:click={()=>signout()}>Sign Out</button>
